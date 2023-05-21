@@ -10,7 +10,7 @@ from database import User, Application, DataBase
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'database.db')))
-app.permanent_session_lifetime = datetime.timedelta(days=15)
+app.permanent_session_lifetime = datetime.timedelta(days=5)
 
 
 def connect_db():
