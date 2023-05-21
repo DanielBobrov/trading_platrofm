@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <title>Даня&amp;Саня</title>
+</head>
+<body>
+{% if not user %}
+<header>
+    <p class="button_login">Войти</p>
+    <p class="button_create_account">Зарегистрироваться</p>
+</header>
+<div class="background">
+<form class="login_form" action="/" method="post">
+    <div class="login_error"><p>Введен неправильный логин или пароль!</p></div>
+    <input class="login" name="login" placeholder="login">
+    <input type="password" class="password" name="password" placeholder="password">
+    <input type="button" id="submit" class="no_login no_password" value="Войти">
+</form>
+</div>
+<script language="JavaScript" type="text/javascript" src="/static/js/base.js"></script>
+{% else %}
+<header>
+    <p class="button_logout"><a href="/logout/">Выйти</a></p>
+</header>
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <title>{{ app.title }}</title>
+</head>
+<body>
+{% if not user %}
+<header>
+    <p class="tomain" onclick="javascript:location.href='/';">На главную</p>
+    <p class="button_login">Войти</p>
+    <p class="button_create_account">Зарегистрироваться</p>
+</header>
+<div class="background {% if not login_error %}hidden{% endif %}">
+    <form class="login_form" action="/login/" method="post">
+        <div class="login_error {% if not login_error %}hidden{% endif %}"><p>Введен неправильный логин или пароль!</p>
+        </div>
+        <input class="login" name="login" placeholder="login">
+        <input type="hidden" name="from" value="application%2F{{ app.id }}%2F">
+        <input type="password" class="password" name="password" placeholder="password">
+        <input type="button" id="form_submit" class="no_login no_password" value="Войти">
+    </form>
+</div>
+<script language="JavaScript" type="text/javascript" src="/static/js/base.js"></script>
+{% else %}
+<header>
+    <p class="tomain" onclick="javascript:location.href='/';">На главную</p>
+    <p class="button_logout" onclick="javascript:location.href='/profile/{{ user.id }}/';">Профиль</p>
+    <p class="button_logout" onclick="javascript:location.href='/logout/?from=application%2F{{ app.id }}%2F';">Выйти</p>
+</header>
+{% endif %}
+
+
+<link rel="stylesheet" type="text/css" href="/static/css/application.css">
+<main>
+    <div class="info">
+        <div class="application">
+            <div class="top">
+                <h1 class="title"><a>{{ app.title }}</a></h1>
+                <h1 class="price"> {{ app.price }}</h1>
+            </div>
+            <div class="description">
+                <p>{{ app.description }}</p>
+            </div>
+        </div>
+        <div class="creator link" onclick="javascript:location.href='/profile/{{ creator.id }}/';">
+            <div class="photo">
+                <img src="{{ creator.photo }}">
+            </div>
+            <div class="creatorinfo">
+                <p>{{ creator.surname }}</p>
+                <p>{{ creator.name }}</p>
+                <p>{{ creator.email }}</p>
+                <p>{{ creator.telephone_number }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="responses">
+        <div class="top">
+            <h2 class="title">Откликнулись</h2>
+            {% if user and user.id != app.creator_id and app.active %}
+            {% if user.id not in responses %}
+            <div class="response link"
+                 onclick="javascript:location.href='/create_response/{{ app.id }}/{{ user.id }}/';">Откликнуться
+            </div>
+            {% else %}
+            <div class="response link"
+                 onclick="javascript:location.href='/delete_response/{{ app.id }}/{{ user.id }}/';">Отменить отклик
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+        {% if app.responses %}
+        {% for responser in app.responses %}
+        <div class="responser">
+            <p class="link" onclick="javascript:location.href='/profile/{{ responser.id }}/';">{{ responser.name }} {{
+                responser.surname }}</p>
+            {% if user.id == app.creator_id and app.active %}
+            <div class="response link"
+                 onclick="javascript:location.href='/end_application/{{ app.id }}/{{ responser.id }}/?from=application%2F{{ app.id }}%2F';">
+                Принять
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="noresponses center">Пока никто не откликнулся:(</p>
+        {% endif %}
+    </div>
+</main>
+
+</body>
+</html>

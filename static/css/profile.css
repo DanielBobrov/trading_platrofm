@@ -1,0 +1,90 @@
+main {
+    width: 90%;
+    height: 90%;
+    background-color: #FFFFFF;
+    display: flex;
+    align-content: stretch;
+    flex-direction: column;
+}
+
+.profile {
+    height: calc(50% - 60px);
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 40%;
+    font-size: 24pt;
+}
+
+.photo {
+    height: 100%;
+    aspect-ratio: 866 / 625;
+    & img {
+        float: right;
+        border: 3px solid black;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+
+/* articles */
+.articles {
+    height: calc(50% - 0px);
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.articles * ::-webkit-scrollbar { /* полоса прокрутки */
+    width: 5px;
+    background: #fff;
+}
+.articles * ::-webkit-scrollbar-thumb { /* плашка-бегунок */
+    background: #000;
+}
+.articles * ::-webkit-scrollbar-track { /* фон */
+    background: transparent;
+}
+
+.box {
+    width: 45%;
+}
+
+.apps, .responses {
+    height: calc(100% - 27px);
+    overflow-y: auto;
+    & .article:first-child {
+        margin-top: 0;
+    }
+    & .article:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.block_title {
+    text-align: center;
+}
+
+.article {
+    height: 100px;
+    margin: 20px;
+    border: 5px solid black;
+    padding: 15px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+}

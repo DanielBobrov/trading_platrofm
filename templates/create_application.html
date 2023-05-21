@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <title>Создание заказа</title>
+</head>
+<body>
+<header>
+    <p class="button_logout" onclick="javascript:location.href='/profile/{{ user.id }}/';">Профиль</p>
+    <p class="button_logout" onclick="javascript:location.href='/logout/';">Выйти</p>
+</header>
+
+<main class="create-place">
+    <link rel="stylesheet" type="text/css" href="/static/css/create_application.css">
+    <h1 class="create-order-span">Создание заказа</h1>
+    <form action="/create_application" method="post">
+        <input type="hidden" name="type" value="create_application">
+        <div class="inputs-line">
+            <input name="title" type="text" placeholder="Название" class="title">
+            <input name="price" type="text" placeholder="Цена" class="price">
+        </div>
+        <textarea name="description" placeholder="Описание" class="description"></textarea>
+        <input type="button" class="no_title no_description" id="submit" value="Создать заказ">
+    </form>
+</main>
+<script language="JavaScript" type="text/javascript" src="/static/js/create_application.js"></script>
+
+</body>
+</html>
