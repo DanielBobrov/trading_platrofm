@@ -51,15 +51,16 @@ def login():
     logged = check_login(request.form)
     if logged:
         session["user_login"] = request.form.get("login")
-    fr = request.form.get("from", None)
-    return redirect(f"/{fr + '/' if fr else ''}{'?login_error=True' if not logged else ''}")
+    fr = request.args.get("from", None)
+    redirect_url = f"{fr if fr else ''}{'?login_error=True' if not logged else ''}"
+    return redirect(redirect_url)
 
 
 @app.route("/logout/", methods=["GET", "POST"])
 def logout():
     session.clear()
     fr = request.args.get("from", None)
-    return redirect(f"/{fr + '/' if fr else ''}")
+    return redirect(fr if fr else '')
 
 
 @app.route("/end_application/<int:app_id>/<int:responser_id>/", methods=["GET", "POST"])
@@ -84,12 +85,14 @@ def create_app():
     return redirect("/")
 
 
-@app.route("/profile/<int:user_id>/", methods=["GET"])
-def profile(user_id):
-    user = User(id=user_id)
-    apps = [Application(id=i) for i in user.apps]
-    responses = [Application(id=i) for i in user.responses]
-    return render_template("profile.html", user=user, apps=apps, responses=responses, login_error=request.args.get("login_error", ""))
+@app.route("/profile/<int:profile_id>/", methods=["GET"])
+def profile(profile_id):
+    profile = User(id=profile_id)
+    user = session.get("user_login", None)
+    user = User(login=user) if user else None
+    apps = [Application(id=i) for i in profile.apps]
+    responses = [Application(id=i) for i in profile.responses]
+    return render_template("profile.html", user=user, profile=profile, apps=apps, responses=responses, login_error=request.args.get("login_error", ""))
 
 
 @app.route("/application/<int:app_id>/", methods=["GET"])
@@ -100,7 +103,6 @@ def application(app_id):
     responses = tuple(app.responses)
     for i in range(len(app.responses)):
         app.responses[i] = User(id=app.responses[i])
-    print(app.active)
     return render_template("application.html", app=app, user=user, responses=responses, login_error=request.args.get("login_error", ""), creator=User(id=app.creator_id))
 
 

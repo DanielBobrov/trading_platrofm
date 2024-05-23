@@ -3,26 +3,30 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/static/css/base.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <title>Даня&amp;Саня</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 {% if not user %}
 <header>
+    <p class="to_main" onclick="javascript:location.href='/';">На главную</p>
     <p class="button_login">Войти</p>
     <p class="button_create_account">Зарегистрироваться</p>
 </header>
-<div class="background">
-<form class="login_form" action="/" method="post">
-    <div class="login_error"><p>Введен неправильный логин или пароль!</p></div>
-    <input class="login" name="login" placeholder="login">
-    <input type="password" class="password" name="password" placeholder="password">
-    <input type="button" id="submit" class="no_login no_password" value="Войти">
-</form>
+<div class="background {% if not login_error %}hidden{% endif %}">
+    <form class="login_form" action="/login/?from={{ request.url }}" method="post">
+        <div class="login_error {% if not login_error %}hidden{% endif %}"><p>Введен неправильный логин или пароль!</p></div>
+        <input class="login" name="login" placeholder="login">
+        <input type="password" class="password" name="password" placeholder="password">
+        <input type="button" id="form_submit" class="no_login no_password" value="Войти">
+    </form>
 </div>
 <script language="JavaScript" type="text/javascript" src="/static/js/base.js"></script>
 {% else %}
 <header>
-    <p class="button_logout"><a href="/logout/">Выйти</a></p>
+    <p class="to_main" onclick="javascript:location.href='/';">На главную</p>
+    <p class="to_main" onclick="javascript:location.href='/create_application';">Создать заказ</p>
+    <p class="button_logout" onclick="javascript:location.href='/profile/{{ user.id }}/';">Профиль</p>
+    <p class="button_logout" onclick="javascript:location.href='/logout/?from={{ request.url }}';">Выйти</p>
 </header>
 {% endif %}
 

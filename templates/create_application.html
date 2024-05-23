@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <title>Создание заказа</title>
-</head>
-<body>
-<header>
-    <p class="button_logout" onclick="javascript:location.href='/profile/{{ user.id }}/';">Профиль</p>
-    <p class="button_logout" onclick="javascript:location.href='/logout/';">Выйти</p>
-</header>
+{% extends "base.html" %}
+{% block title %}Создание нового заказа{% endblock %}
+{% block content %}
+
 
 <main class="create-place">
     <link rel="stylesheet" type="text/css" href="/static/css/create_application.css">
@@ -26,5 +18,4 @@
 </main>
 <script language="JavaScript" type="text/javascript" src="/static/js/create_application.js"></script>
 
-</body>
-</html>
+{% endblock %}

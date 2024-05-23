@@ -39,6 +39,13 @@ main {
     padding: 15px;
 }
 
+.description p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .top {
     display: flex;
     justify-content: space-between;
